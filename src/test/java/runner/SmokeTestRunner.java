@@ -9,7 +9,7 @@ import cucumber.api.junit.Cucumber;
 @CucumberOptions(
 		     
 		features="src/test/resources/Business_Logic",
-		tags="@SmokeTest",
+		tags="@RegressionTest",
 		glue="cucumbermap"
 		
 		

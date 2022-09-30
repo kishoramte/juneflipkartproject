@@ -1,11 +1,11 @@
 Feature: Login functionality
 
 Background: User cancelled initial login window
-Given User provide browser name as "Chrome" and exe location as "D:\\Automation Support\\Chromedriver.exe"
-Given User enter url as "https://www.flipkart.com"
+Given User provide browser name as "Chrome" and exe location
+Given User enter url as
 Given User cancelled initial login window
 
-@smokeTest
+
 Scenario: Login functionality with valid credential
 When user navigate on login tab
 When user click on MyProfile

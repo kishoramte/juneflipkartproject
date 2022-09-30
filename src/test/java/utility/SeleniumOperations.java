@@ -1,5 +1,6 @@
 package utility;
 
+import java.util.Hashtable;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -8,23 +9,26 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 
+import cucumbermap.ConfigReader;
+
 public class SeleniumOperations {
 	
 	public static WebDriver driver=null;
-	
+	public static ConfigReader config;
+	public static Hashtable<String,Object> outputParameters=new Hashtable<String, Object>();
 	// BrowserLaunch
 	 
-	public static void browserLaunch(Object[]inputParameters){
+	public static Hashtable<String,Object> browserLaunch(Object[]inputParameters){
 		try {
 			
 		
 		String bName=(String) inputParameters[0];
-		String webdriverxpath=(String) inputParameters[1];
+		
 		
 		if(bName.equalsIgnoreCase("Chrome")){
 			
-		
-		System.setProperty("webdriver.chrome.driver", webdriverxpath);
+		 config=new ConfigReader();
+		System.setProperty("webdriver.chrome.driver", config.getDriverPathChrome());
 		
 		driver=new ChromeDriver();
 		
@@ -35,44 +39,54 @@ public class SeleniumOperations {
 		else if(bName.equalsIgnoreCase("Firefox")){
 			
 			
-			System.setProperty("webdriver.gecko.driver", webdriverxpath);
+			System.setProperty("webdriver.gecko.driver", config.getDriverPathFF());
 			
 			driver=new ChromeDriver();
 			
 			driver.manage().window().maximize();
 			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-			}}
+			}outputParameters.put("STATUS", "Pass");
+			 outputParameters.put("MESSAGE", "Method used:browserLaunch , Input Given: " + inputParameters[0].toString());}
 		catch(Exception e){
-			System.out.println(e);
+			outputParameters.put("STATUS", "Fail");
+			 outputParameters.put("MESSAGE", "Method used:browserLaunch , Input Given: " + inputParameters[0].toString());
 		}
+		return outputParameters;
 	}
 	// open Application
-	public static void openApplication(Object[]inputParameters){
+	public static Hashtable<String,Object> openApplication(){
 		try{
 			
 		
-		String strurl=(String) inputParameters[0];
 		
-		driver.get(strurl);
+		
+		driver.get(config.getApplicationUrl());
+		outputParameters.put("STATUS", "Pass");
+		 outputParameters.put("MESSAGE", "Method used:openApplication , Input Given: " + config.getApplicationUrl().toString());
 	}
 	catch(Exception e){
-		System.out.println(e);
-	}}
+		outputParameters.put("STATUS", "Fail");
+		 outputParameters.put("MESSAGE", "Method used:openApplication , Input Given: " + config.getApplicationUrl().toString());
+	}
+		return outputParameters;}
 	//click
-public static void clickOnElement(Object[]inputParameters){
+public static Hashtable<String,Object> clickOnElement(Object[]inputParameters){
 		try{
 			
 		
 		String locator=(String) inputParameters[0];
 		
-		driver.findElement(By.xpath(locator)).click();		
+		driver.findElement(By.xpath(locator)).click();
+		outputParameters.put("STATUS", "Pass");
+		 outputParameters.put("MESSAGE", "Method used:clickOnElement , Input Given: " + inputParameters[0].toString());
 }
 		catch(Exception e){
-			System.out.println(e);
-		}	
+			outputParameters.put("STATUS", "Fail");
+			 outputParameters.put("MESSAGE", "Method used:clickOnElement , Input Given: " + inputParameters[0].toString());
+			}return outputParameters;	
 }
     //mouseover
-        public static void mouseOverAction(Object[]inputParameters){
+        public static Hashtable<String,Object> mouseOverAction(Object[]inputParameters) throws InterruptedException{ Thread.sleep(5000);
 	try{
 		
 	     String locator=(String) inputParameters[0];
@@ -81,43 +95,72 @@ public static void clickOnElement(Object[]inputParameters){
 		WebElement xyz=driver.findElement(By.xpath(locator));
 			
 			act.moveToElement(xyz).build().perform();
+			outputParameters.put("STATUS", "Pass");
+			 outputParameters.put("MESSAGE", "Method used:mouseOverAction , Input Given: " + inputParameters[0].toString());
 }     catch(Exception e){
-	   System.out.println(e);
-}
+	outputParameters.put("STATUS", "Fail");
+	 outputParameters.put("MESSAGE", "Method used:mouseOverAction , Input Given: " + inputParameters[0].toString());
+}    return outputParameters;
+        }
+        //mouseover
+        public static Hashtable<String,Object> mouseOverActions(Object[]inputParameters) throws InterruptedException{ Thread.sleep(5000);
+	try{
+		
+	     String locator=(String) inputParameters[0];
+	 	Actions act=new Actions(driver);
+		
+		WebElement xyz=driver.findElement(By.xpath(locator));
+			
+			act.moveToElement(xyz).build().perform();
+			outputParameters.put("STATUS", "Pass");
+			 outputParameters.put("MESSAGE", "Method used:mouseOverAction , Input Given: " + inputParameters[0].toString());
+}     catch(Exception e){
+	outputParameters.put("STATUS", "Fail");
+	 outputParameters.put("MESSAGE", "Method used:mouseOverAction , Input Given: " + inputParameters[0].toString());
+}    return outputParameters;
         }
         //click on My Profile	
-        public static void clickOnMyProfile(Object[]inputParameters){
+        public static Hashtable<String,Object> clickOnMyProfile(Object[]inputParameters){
     		try{
     		String locator=(String) inputParameters[0];
     		
-    		driver.findElement(By.xpath(locator)).click();		
+    		driver.findElement(By.xpath(locator)).click();
+    		outputParameters.put("STATUS", "Pass");
+			 outputParameters.put("MESSAGE", "Method used:clickOnMyProfile , Input Given: " + inputParameters[0].toString());
     }     catch(Exception e){
-		System.out.println(e);
-	}
+    	outputParameters.put("STATUS", "Fail");
+		 outputParameters.put("MESSAGE", "Method used:clickOnMyProfile , Input Given: " + inputParameters[0].toString());	} 
+    		return outputParameters;
         }// Enter userName
-public static void sendText(Object[]inputParameters) throws InterruptedException{ Thread.sleep(5000);
+public static Hashtable<String,Object> sendText(Object[]inputParameters) throws InterruptedException{ Thread.sleep(5000);
         try{
       
     		String locator=(String) inputParameters[0];
     		String mobileno=(String) inputParameters[1];
     		driver.findElement(By.xpath(locator)).sendKeys(mobileno);
+    		outputParameters.put("STATUS", "Pass");
+			 outputParameters.put("MESSAGE", "Method used:sendText , Input Given: " + inputParameters[0].toString());
     }   catch(Exception e){
-		System.out.println(e);
-	}
+    	outputParameters.put("STATUS", "Fail");
+		 outputParameters.put("MESSAGE", "Method used:sendText , Input Given: " + inputParameters[0].toString());	}
+        return outputParameters;
 }
 //click on Login	
-public static void clickOnLogin(Object[]inputParameters){
+public static Hashtable<String,Object> clickOnLogin(Object[]inputParameters) throws InterruptedException{Thread.sleep(5000);
 	try{
 	
 	String locator=(String) inputParameters[0];
 	
-	driver.findElement(By.xpath(locator)).click();		
+	driver.findElement(By.xpath(locator)).click();
+	outputParameters.put("STATUS", "Pass");
+	 outputParameters.put("MESSAGE", "Method used:clickOnLogin , Input Given: " + inputParameters[0].toString());
 }   catch(Exception e){
-	System.out.println(e);
-}
+	outputParameters.put("STATUS", "Fail");
+	 outputParameters.put("MESSAGE", "Method used:clickOnLogin , Input Given: " + inputParameters[0].toString());
+}return outputParameters;
 } 
 // validation
-public static void validation(Object[]inputParameters) throws InterruptedException{ Thread.sleep(5000);
+public static Hashtable<String,Object> validation(Object[]inputParameters) throws InterruptedException{ Thread.sleep(5000);
 try{
 
 String xpath=(String) inputParameters[0];
@@ -129,10 +172,13 @@ if(findedText.equalsIgnoreCase(givenText)){
 }
 else{
 	System.out.println("Test case faild");
+	outputParameters.put("STATUS", "Pass");
+	 outputParameters.put("MESSAGE", "Method used:validation , Input Given: " + inputParameters[0].toString());
 }
 }catch(Exception e){
-	System.out.println(e);
-}
+	outputParameters.put("STATUS", "Fail");
+	 outputParameters.put("MESSAGE", "Method used:validation , Input Given: " + inputParameters[0].toString());
+}return outputParameters;
 }
 
 }
